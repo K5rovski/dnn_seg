@@ -1,45 +1,120 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+# DNN_Seg
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+__Short Description__
 
----
+This is a Small Machine Learning Framework, for Image Segmentation on Medical Images.
 
-## Edit a file
+It's build to be modular so that different parts can possibly be applied in neighboring domains.
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+__So far we have tested these procedures on preprocessed* EM images of:__
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
 
----
 
-## Create a file
+1. **_Prefrontal Axon_**
 
-Next, you’ll add a new file to this repository.
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+    ![Prefrontal Axon](https://i.imgur.com/VACsO3V.png "Prefrontal Neuron Fiber")
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+2. **_Optic Nerve Fiber_**
 
----
 
-## Clone a repository
+    ![Optic Nerve Fiber](https://i.imgur.com/4RxEa2p.png "Optic Nerve Fiber")
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+
+*The images were first preprocessed to 3 separate classes,
+
+ using a clustering tool (BayesNet or KMeans)
+______
+
+## Code setup
+
+
+### Setup Python
+
+
+1. The Miniconda package was used for python development
+
+    + Download miniconda from [conda](https://conda.io/miniconda.html)
+   
+2. The file **"setup/dnn_experiment.yaml"** contains the python environment info
+    + Inside a terminal, at root execute `conda env create -f setup/dnn_experiment.yml`
+
+
+
+
+
+*This can be done independently on Linux or other OS, using the yaml environment file, which contains all needed package info...
+
+-------
+
+
+###Setup ImageJ
+
+ImageJ is an open-source scientific Image Processing Library.
+
+
+1. Download ImageJ in Fiji Form [Fiji](https://fiji.sc/)
+2. You can use this module to view images and edit them,
+3. And use it for some parts of the pipeline below...
+
+
+------
+
+## Testing the modules
+
+All the main processing can be viewed using python notebooks:
+(also found in the notebooks folder locally)
+
+1. [Sampling Training Instances](https://colab.research.google.com/drive/1P41TTk9QhhklUvlNJlP_uK99XeRz79Yn)
+2. [Making a LMDB Instance Base]()
+2. [Operating a DNN Instance](https://colab.research.google.com/drive/1ukglFO11jWlIBO7FsnGUSDGwPtNJc7cA)
+3. [Operating an AEN Instance]()
+3. [Operating a CRBM Instance]()
+
+
+------
+
+## Running the code
+
+All the code processing is mainly executed using workspaces:
+
+1. `sample/sample_set_workspace.py`
+2. `database/production_script.py`
+3. `train/dnn_workspace.py`
+4. `train/autoenc_workspace.py`
+5.  ~~train/crbm_workspace.py~~
+6. ~~utils/vis_maps.py~~
+
+by changing values in the **workspace** files, which then execute separately.
+
+There is a separate code which saves the configuration scripts, for experiment tracking.
+
+The main processing pipeline blocks are described thouroughly in [Neuron Fiber Segmentation](https://docs.google.com/spreadsheets/d/1c5AoThN5RqBoowZb_t5Ak4pKHGL7dD8l-m8MUjJMVp0/edit?usp=sharing).
+
+
+For any questions, or issues you can email the developer at [Kristijan Petrovski](mailto:petrovski.kristijan@manu.edu.mk).
+
+
+------
+
+
+## Ray measuring tool
+
+The ray measuring tool is used to measure the fiber isolation band around a ROI border.
+
+
+It is build from 4 different processing steps:
+
+1. `raym/run_ray_meas.py`
+2. `raym/calc_matches.py`
+3.  `raym/find_postc_params.py`
+4. `raym/draw_gratio.py`
+
+Also we provide an imagej plugin which automates all the processing, using a single text configuration file.
+
+
+   **It's located at raym/RayMeasuringPlugin.**
+
