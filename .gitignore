@@ -1,2 +1,3 @@
 *.pyc
-gui/
+__pycache__/
+.idea/

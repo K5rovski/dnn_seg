@@ -180,7 +180,7 @@ base_meas=join(confD['raymeas_save_dir'],confD['base_meas_roiDir'])  #'autoenc_m
 
 
 imgnames=list(set([img[img.rindex('sp'):img.rindex('img')+5] for img in os.listdir(confD['case1_picDir']) if img.endswith('.tif')]))
-print(imgnames)
+print("Working on these images: ",imgnames)
 
 
 distThres=int(confD['base_dist_thres']) #80

@@ -1,5 +1,0 @@
-'''
-Creating lmdb databases
-'''
-
-pass

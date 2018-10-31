@@ -35,25 +35,26 @@ ______
 ### Setup Python
 
 
-1. The Miniconda package was used for python development
+#### 1. The Miniconda package was used for python development
 
-    + Download miniconda from [conda](https://conda.io/miniconda.html)
+ + Download miniconda from [conda](https://conda.io/miniconda.html)
    
-2. The file **"setup/dnn_experiment.yaml"** contains the python environment info
-    + Inside a terminal, at root execute `conda env create -f setup/dnn_experiment.yml`
+#### 2. The file **"setup/dnn_experiment.yaml"** contains the python environment info
+   + Inside a terminal, at root execute  **`conda env create -f setup/dnn_experiment.yml`**
 
 
 
 
 
-*This can be done independently on Linux or other OS, using the yaml environment file, which contains all needed package info...
+
+* This can be done independently on Linux or other OS, using the yaml environment file, which contains all needed package info...
 
 -------
 
 
-###Setup ImageJ
+### Setup ImageJ
 
-ImageJ is an open-source scientific Image Processing Library.
+ImageJ is an open-source scientific Image Processing Application, with Java Libraries.
 
 
 1. Download ImageJ in Fiji Form [Fiji](https://fiji.sc/)
@@ -81,12 +82,12 @@ All the main processing can be viewed using python notebooks:
 
 All the code processing is mainly executed using workspaces:
 
-1. `sample/sample_set_workspace.py`
-2. `database/production_script.py`
-3. `train/dnn_workspace.py`
-4. `train/autoenc_workspace.py`
-5.  ~~train/crbm_workspace.py~~
-6. ~~utils/vis_maps.py~~
+1. `data_prep/sample/sample_set_workspace.py`
+2. `data_prep/base/production_script.py`
+3. `net/dnn_workspace.py`
+4. `net/autoenc_workspace.py`
+5.  ~~net/run_crbm.py~~
+6. ~~net/utils/_vis_best_maps.py~~
 
 by changing values in the **workspace** files, which then execute separately.
 

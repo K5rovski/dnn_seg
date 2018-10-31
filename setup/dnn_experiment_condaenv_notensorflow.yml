@@ -1,0 +1,44 @@
+name: dnn_experimental_base
+channels:
+- willyd
+- conda-forge
+- defaults
+dependencies:
+- entrypoints
+- html5lib
+- ipython
+- jupyter_core
+- python-lmdb
+- mistune
+- nbconvert
+- notebook
+- opencv
+- pandoc
+- pip
+- pyzmq
+- six
+- wheel
+- ipython-notebook
+- python
+- pip:
+  - cycler
+  - enum34
+  - ipython-genutils
+  - jupyter-client
+  - jupyter-core
+  - keras==1.2.2
+  - lmdb
+  - markdown
+  - matplotlib
+  - numpy
+  - prompt-toolkit
+  - protobuf
+  - pyparsing
+  - pytz
+  - pyyaml
+  - scikit-learn
+  - scipy
+  - tensorflow-tensorboard
+  - werkzeug
+  - win-unicode-console
+
