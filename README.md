@@ -69,12 +69,12 @@ ImageJ is an open-source scientific Image Processing Application, with Java Libr
 All the main processing can be viewed using python notebooks:
 (also found in the notebooks folder locally)
 
-1. [Sampling Training Instances](https://colab.research.google.com/drive/1P41TTk9QhhklUvlNJlP_uK99XeRz79Yn)
+1. [Sampling Training Instances]()
 2. [Making a LMDB Instance Base]()
-2. [Operating a DNN Instance](https://colab.research.google.com/drive/1ukglFO11jWlIBO7FsnGUSDGwPtNJc7cA)
-3. [Operating an AEN Instance]()
+2. [Operating a DNN Instance](https://colab.research.google.com/drive/16XMf4xMbiq4teHH9Q1cAADbE5XBgC_2z)
+3. [Operating an AEN Instance](https://colab.research.google.com/drive/1nVvma1c4SsToakpSm4k5BbLZHmp8OEwV)
 3. [Operating a CRBM Instance]()
-
+4. [Visualising Neural Networks](https://colab.research.google.com/drive/1HJmUupm-asF3jsUUAZgtPo7wYuxHy9Ug)
 
 ------
 
