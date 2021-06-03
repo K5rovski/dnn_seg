@@ -1,76 +1,22 @@
-name: dnn_experimental
+name: dnn_experimental2
 channels:
 - willyd
 - conda-forge
 - defaults
 dependencies:
-- bleach=2.0.0=py35_0
-- certifi=2017.11.5=py35_0
-- colorama=0.3.9=py35_0
-- decorator=4.1.2=py35_0
-- entrypoints=0.2.3=py35_1
-- html5lib=1.0.1=py_0
-- ipykernel=4.7.0=py35_0
-- ipython=6.2.1=py35_1
-- ipython_genutils=0.2.0=py35_0
-- jedi=0.10.2=py35_0
-- jinja2=2.10=py35_0
-- jsonschema=2.5.1=py35_0
-- jupyter_client=5.2.1=py35_0
-- jupyter_core=4.4.0=py_0
-- python-lmdb=0.94=py35hfa6e2cd_0
-- markupsafe=1.0=py35_0
-- mistune=0.8.3=py_0
-- nbconvert=5.3.1=py_1
-- nbformat=4.4.0=py35_0
-- notebook=5.2.2=py35_1
-- opencv=3.4.2=py35h40b0b35_0
-- py-opencv=3.4.2=py35hc319ecb_0
-- pandoc=2.1=0
-- pandocfilters=1.4.1=py35_0
-- pickleshare=0.7.4=py35_0
-- pip=9.0.1=py35_1
-- prompt_toolkit=1.0.15=py35_0
-- pygments=2.2.0=py35_0
-- python-dateutil=2.6.1=py35_0
-- pyzmq=16.0.2=py35_3
-- setuptools=38.4.0=py35_0
-- simplegeneric=0.8.1=py35_0
-- six=1.11.0=py35_1
-- testpath=0.3.1=py35_0
-- tornado=4.5.3=py35_0
-- traitlets=4.3.2=py35_0
-- vc=14=0
-- vs2015_runtime=14.0.25420=0
-- wcwidth=0.1.7=py35_0
-- webencodings=0.5=py35_0
-- wheel=0.30.0=py35_2
-- win_unicode_console=0.5=py35_0
-- wincertstore=0.2=py35_0
-- ipython-notebook=4.0.4=py35_3
-- msvc_runtime=1.0.1=vc14_0
-- python=3.5.0=4
+- ipython
+- jupyter
+- python-lmdb=0.94
+- opencv=3
+- pip
+- python=3.6
+- numpy
+- scipy
+- h5py
+- scikit-learn=0.19.2
 - pip:
-  - cycler==0.10.0
-  - enum34==1.1.6
-  - ipython-genutils==0.2.0
-  - jupyter-client==5.2.1
-  - jupyter-core==4.4.0
   - keras==1.2.2
-  - h5py==2.7.1
-  - markdown==2.6.11
-  - matplotlib==2.1.1
-  - numpy==1.14.0
-  - prompt-toolkit==1.0.15
-  - protobuf==3.5.1
-  - pyparsing==2.2.0
-  - pytz==2017.3
-  - pyyaml==3.12
-  - scikit-learn==0.19.1
-  - scipy==1.0.0
-  - tensorflow-gpu==0.12.1
-  - tensorflow-tensorboard==0.4.0
-  - werkzeug==0.14.1
-  - win-unicode-console==0.5
-prefix: C:\Users\kiko5\Miniconda3\envs\dnn_experimental
+  - matplotlib==2.2.5
+  - tensorflow-gpu==1.12.0
+prefix: dnn_experimental2
 

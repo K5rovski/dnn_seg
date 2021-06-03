@@ -53,11 +53,11 @@ def get_how_many_patches(patcher_args,do_expand,patch_size,rand_passed,smaller_s
     rand_passed_maps=[]
     passed_counts=[]
     for find,filename in enumerate(filenames):
-        patches=image_iterator_new(filename, test_path, groundtruth_path,
+        len_patches, patches=image_iterator_new(filename, test_path, groundtruth_path,
                 type_set, -2 if mask_dir is not None else patches_count , save_path,
         do_expand=do_expand,patch_size=patch_size,PATCH_DIR=mask_dir,do_patch=False,do_special=do_special)
 
-        rand_passed_maps.append(np.zeros((len(patches),),dtype=np.bool) )
+        rand_passed_maps.append(np.zeros((len_patches,),dtype=np.bool) )
         passed_counts.append(count_pass)
 
         for pind,(image,class_img,coords) in enumerate(patches):
@@ -98,11 +98,11 @@ def create_lmdbs(db_folder,phase_done,patcher_args,image_list_folder,image_prepe
 
     #!!!
     # Think whether patches count below should be 0
-    patches=image_iterator_new(filenames[0], test_path, groundtruth_path,
+    len_patches, patches=image_iterator_new(filenames[0], test_path, groundtruth_path,
             type_set, 0, save_path,do_expand=do_expand,patch_size=patch_size,do_patch=False)
 
-    len_random_index=len(patches)*len(filenames)
-    single_rand_len=len(patches)
+    len_random_index=len_patches*len(filenames)
+    single_rand_len=len_patches
     len_int = len(str(len_random_index))
     if len_int < 8: len_int = 8
 
@@ -192,7 +192,7 @@ def run_single_batch(batch_ind_start,batch_ind_end,continous_ind, do_expand,imag
         passed_batch_mask=make_segmented_patches(patch_passed_maps,passed_counts,
                                                  randInt,batch_ind_start,batch_ind_end,find)
 
-        patches = image_iterator_new(filename, test_path, groundtruth_path,
+        _, patches = image_iterator_new(filename, test_path, groundtruth_path,
                                           type_set, -2 if mask_dir is not None else patches_count,
                                       save_path, do_expand=do_expand,patch_size=patch_size,
                                       PATCH_DIR=mask_dir,do_print=True if find==0 and batch_ind_start==0 else False,

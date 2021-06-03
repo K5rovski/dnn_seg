@@ -12,7 +12,7 @@ import pickle
 random.seed(8)
 
 def cut_new(expanded_image, groundtruth_image, pixel_x, pixel_y,
- border_bar, output_namebase, set_type, save_path,do_expand=False,do_patch=True):
+ border_bar, output_namebase, set_type, save_path,do_expand=False,do_patch=True,**kwargs):
 
     groundtruth_class = (str(groundtruth_image[pixel_x-border_bar, pixel_y-border_bar]))
     if not do_expand:
@@ -317,49 +317,60 @@ def patch_image_expand_new(image_path, window_size, groundtruth_path,
         if subsample_patch_mask.shape[0]!=len(selected_pixels):
             raise Exception('Subsample mask not equal to patcher output '+str(subsample_patch_mask.shape)+" "+str(len(selected_pixels)) )
 
+    cut_params = dict( do_expand=do_expand,
+                                           do_patch=do_patch,
+                                           not_mix_patches=do_special.get('not_mix_patches',False) if do_special else None,
+                            perc_switch=do_special['perc_switch'] if do_special else None,
+                            two_patch=do_special.get('two_patch',False) if do_special else None,
+                                           folded_expand=do_special.get('folded_expand',False) if do_special else None
+                                           )
+    params = (expanded_image, gnd_new_image, border_bar, output_namebase, set_type, save_path) 
+
+    return selected_pixels, mask_choice, selected_pixels_gray ,do_special, params, cut_params
+# ------------------------------------
 
     # Parallel(n_jobs=1)(delayed(cut)(expanded_image, groundtruth_image, pixel_x, pixel_y, border_bar, output_namebase, set_type, save_path) for (pixel_x, pixel_y) in selected_pixels)
 
-    if not do_special is not None:
-        patches=[]
-        for ((pixel_x,pixel_y),do_pass) in zip(selected_pixels,mask_choice):
-            if  do_pass:
+   #  if not do_special is not None:
+   #      patches=[]
+   #      for ((pixel_x,pixel_y),do_pass) in zip(selected_pixels,mask_choice):
+   #          if  do_pass:
 
-                patches.append(cut_new(expanded_image,gnd_new_image,pixel_x,pixel_y,
+   #              yield (cut_new(expanded_image,gnd_new_image,pixel_x,pixel_y,
 
-                    border_bar,output_namebase,set_type,save_path,do_expand=do_expand,do_patch=do_patch ))
+   #                  border_bar,output_namebase,set_type,save_path,do_expand=do_expand,do_patch=do_patch ))
 
-            else:
-                patches.append(empty_patch())
+   #          else:
+   #             yield (empty_patch())
 
-    if do_special is not None:
-        patches=[]
-        selected_cellpixels_border = len(selected_pixels)-len(selected_pixels_gray)
+   #  if do_special is not None:
+   #      patches=[]
+   #      selected_cellpixels_border = len(selected_pixels)-len(selected_pixels_gray)
 
-        for indpix,((pixel_x, pixel_y),do_pass) in enumerate(zip(selected_pixels,mask_choice)):
+   #      for indpix,((pixel_x, pixel_y),do_pass) in enumerate(zip(selected_pixels,mask_choice)):
 
-            if do_pass and indpix<selected_cellpixels_border:
+   #          if do_pass and indpix<selected_cellpixels_border:
 
-                patches.append(cut_special(expanded_image, gnd_new_image, pixel_x, pixel_y,
-                                        border_bar, output_namebase, set_type, save_path, do_expand=do_expand,
-                                        do_patch=do_patch,not_mix_patches=True,two_patch=do_special.get('two_patch',False),
-                                           folded_expand=do_special.get('folded_expand', False)
-                                           ))
-            elif do_pass and indpix>=selected_cellpixels_border:
-                patches.append(cut_special(expanded_image, gnd_new_image, pixel_x, pixel_y,
-                                           border_bar, output_namebase, set_type, save_path, do_expand=do_expand,
-                                           do_patch=do_patch,not_mix_patches=do_special.get('not_mix_patches',False),
-                            perc_switch=do_special['perc_switch'],two_patch=do_special.get('two_patch',False),
-                                           folded_expand=do_special.get('folded_expand',False)   ))
-            else:
-                patches.append(empty_patch())
+   #              yield (cut_special(expanded_image, gnd_new_image, pixel_x, pixel_y,
+   #                                      border_bar, output_namebase, set_type, save_path, do_expand=do_expand,
+   #                                      do_patch=do_patch,not_mix_patches=True,two_patch=do_special.get('two_patch',False),
+   #                                         folded_expand=do_special.get('folded_expand', False)
+   #                                         ))
+   #          elif do_pass and indpix>=selected_cellpixels_border:
+   #              yield (cut_special(expanded_image, gnd_new_image, pixel_x, pixel_y,
+   #                                         border_bar, output_namebase, set_type, save_path, do_expand=do_expand,
+   #                                         do_patch=do_patch,not_mix_patches=do_special.get('not_mix_patches',False),
+   #                          perc_switch=do_special['perc_switch'],two_patch=do_special.get('two_patch',False),
+   #                                         folded_expand=do_special.get('folded_expand',False)   ))
+   #          else:
+   #              yield (empty_patch())
 
 
-    end = time.clock()
+   #  end = time.clock()
 
-    if do_print: print ("Patching took: "+str(end-start)+"s.")
+   #  if do_print: print ("Patching took: "+str(end-start)+"s.")
 
-    return patches
+   # # return patches
 
 def image_iterator_new(filename, test_path, groundtruth_path, type, patches,
         save_path,PATCH_DIR=None,do_expand=True,patch_size=45,
@@ -373,7 +384,7 @@ def image_iterator_new(filename, test_path, groundtruth_path, type, patches,
     print('Starting patching on image: ',filename_small," ...\n")
     start_t=time.time()
 
-    patches=patch_image_expand_new(filename,
+    selected_pixels, mask_choice, selected_pixels_gray ,do_special, params, cut_params=patch_image_expand_new(filename,
                         patch_size,
                         groundtruth_image_path,
                        filename_small,
@@ -384,11 +395,51 @@ def image_iterator_new(filename, test_path, groundtruth_path, type, patches,
                         do_expand=do_expand,do_print=do_print,do_patch=do_patch,
                         do_special=do_special)
 
+
     print('Finished patching: {:.2f} secs.'.format(time.time()-start_t))
-    return patches
+    return len(selected_pixels), pathes_iterator(selected_pixels, mask_choice, selected_pixels_gray ,
+        do_special, params, cut_params)
+    # return patches
 
 
 
+def pathes_iterator(selected_pixels, mask_choice, selected_pixels_gray ,do_special=None,params=None, cut_params=None):
+
+
+  (expanded_image, gnd_new_image, border_bar, output_namebase, set_type, save_path) = params
+
+  if True:
+    if not do_special is not None:
+      patches=[]
+      for ((pixel_x,pixel_y),do_pass) in zip(selected_pixels,mask_choice):
+          if  do_pass:
+              raise Exception('unsupported ')
+              yield (cut_new(*params[:2], pixel_x, pixel_y, *params[2:],
+                **cut_params))
+
+          else:
+             yield (empty_patch())
+
+    if do_special is not None:
+      patches=[]
+      selected_cellpixels_border = len(selected_pixels)-len(selected_pixels_gray)
+
+      for indpix,((pixel_x, pixel_y),do_pass) in enumerate(zip(selected_pixels,mask_choice)):
+
+          if do_pass and indpix<selected_cellpixels_border:
+              yield (cut_special(*params[:2], pixel_x, pixel_y, *params[2:], **cut_params       
+                ))
+          elif do_pass and indpix>=selected_cellpixels_border:
+              yield (cut_special(*params[:2], pixel_x, pixel_y, *params[2:], **cut_params ))
+          else:
+              yield (empty_patch())
+
+
+  end = time.clock()
+
+  # if do_print: print ("Patching took: "+str(end-start)+"s.")
+
+ # return patches
 
 
 
